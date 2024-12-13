@@ -162,7 +162,7 @@ const resetPassword=async(req,res)=>{
         from: 'vs9232563@gmail.com', // sender address
         to: email, // list of receivers
         subject: "Password Reset Request", // Subject line
-        text: `Please click on the following link to reset your password: \n http://localhost:3000/user/forgetPassword/${reset_token}`, // plain text body
+        text: `Please click on the following link to reset your password: \n https://pixify-backend-phx3.onrender.com/user/forgetPassword/${reset_token}`, // plain text body
       });
     
       console.log("Message sent: %s", info.messageId);
