@@ -40,9 +40,6 @@ const getAllPost = async (req, res) => {
 const updatePost = async (req, res) => {
   res.send("update post running good");
 };
-const deletePost = async (req, res) => {
-  res.send("delete post running good");
-};
 
 const getUserPost=async(req,res)=>{
   let {userId}=req.params;
@@ -93,10 +90,46 @@ const commentPost = async(req,res)=>{
   } catch (error) {
       return res.json({msg:"error in like post ", success:false, error:error.message})
   }
-
-
-
 }
+const deletePost = async (req, res) => {
+  const { postId } = req.params; // Extract postId from request parameters
+  const userId = req.user._id; // Extract the logged-in user's ID from the request
+
+  try {
+    // Find the post by ID
+    const post = await postCollection.findById(postId);
+
+    // Check if the post exists
+    if (!post) {
+      return res.json({
+        msg: "Post not found",
+        success: false,
+      });
+    }
+
+    // Check if the logged-in user is the owner of the post
+    if (post.userId.toString() !== userId.toString()) {
+      return res.status(403).json({
+        msg: "You are not authorized to delete this post",
+        success: false,
+      });
+    }
+
+    // Delete the post
+    await postCollection.findByIdAndDelete(postId);
+
+    res.json({
+      msg: "Post deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    res.json({
+      msg: "Error in deleting post",
+      success: false,
+      error: error.message,
+    });
+  }
+};
 module.exports = {
   createPost,
   getAllPost,
@@ -104,5 +137,5 @@ module.exports = {
   deletePost,
   getUserPost,
   likePost,
-  commentPost
+  commentPost,
 };
