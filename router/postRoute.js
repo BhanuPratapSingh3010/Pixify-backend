@@ -12,7 +12,7 @@ router.delete('/delete/:_id',deletePost)
 router.get('/userPost/:userId',getUserPost)
 router.get('/like/:postId',checkToken,likePost)
 router.post('/comment/:postId',checkToken,commentPost);
-router.delete('deletepost/:postId',checkToken,deletePost)
+router.delete('/deletepost/:postId',checkToken,deletePost)
 
 
 
