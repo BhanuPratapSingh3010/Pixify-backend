@@ -97,7 +97,7 @@ const deletePost = async (req, res) => {
 
   try {
     // Find the post by ID
-    const post = await postCollection.findById({userId:postId});
+    const post = await postCollection.findById(postId);
 
     // Check if the post exists
     if (!post) {
